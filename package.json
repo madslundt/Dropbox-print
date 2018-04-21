@@ -1,0 +1,23 @@
+{
+  "name": "print-dropbox",
+  "version": "0.0.1",
+  "description": "Print from dropbox",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mads Engel Lundt",
+  "license": "MIT",
+  "dependencies": {
+    "dropbox": "^4.0.3",
+    "es6-promise": "^4.2.4",
+    "isomorphic-fetch": "^2.2.1",
+    "minimist": "^1.2.0",
+    "nodemailer": "^4.6.4",
+    "nodemailer-smtp-transport": "^2.7.4"
+  },
+  "devDependencies": {
+    "@types/minimist": "^1.2.0",
+    "@types/node": "^9.6.6"
+  }
+}
