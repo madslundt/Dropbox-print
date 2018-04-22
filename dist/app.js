@@ -29,30 +29,20 @@ class App {
             }
         }));
     }
-    processDropbox() {
+    process() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('Processing Dropbox');
             const files = yield this.getFiles();
             if (files.length > 0) {
                 yield this.downloadFiles(files);
                 yield this.deleteFiles(files);
+                this.sendEmails(files);
+                console.log(`${files.length} files processed`);
             }
-            console.log('Processing Dropbox ended');
         });
     }
-    processEmails() {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log('Processing Email');
-            fs.readdir(this.config.filePath, (err, filenames) => {
-                if (err) {
-                    return;
-                }
-                if (filenames.length > 0) {
-                    this.sendEmail(filenames);
-                }
-            });
-            console.log('Processing Email ended');
-        });
+    sendEmails(files) {
+        const filenames = files.map(file => file.name);
+        this.sendEmail(filenames);
     }
     downloadFiles(files) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -96,12 +86,11 @@ class App {
                         path: filePath
                     }]
             });
-            setTimeout(() => { fs.unlink(filePath, (err) => { }); }, 2000);
+            setTimeout(() => { fs.unlink(filePath, (err) => { }); }, 10000);
         }
     }
     getFiles() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('Get files');
             const files = yield this.dropbox.filesListFolder({ path: this.config.dropboxPath });
             if (files && files.entries) {
                 return files.entries;

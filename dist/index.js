@@ -20,14 +20,9 @@ const utils_1 = require("./utils");
         }
         else {
             const app = new app_1.default(config);
-            const process = args['_'] && args['_'].length > 0 ? args['_'][0].toLowerCase() : null;
+            console.log("Processing");
             do {
-                if (process === 'mail') {
-                    yield app.processEmails();
-                }
-                else {
-                    yield app.processDropbox();
-                }
+                yield app.process();
                 yield utils_1.wait(5000);
             } while (true);
         }

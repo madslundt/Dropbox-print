@@ -11,14 +11,9 @@ import { loadConfig, wait } from './utils';
     } else {
         const app = new App(config);
 
-        const process = args['_'] && args['_'].length > 0 ? args['_'][0].toLowerCase() : null;
-
+        console.log("Processing");
         do {
-            if (process === 'mail') {
-                await app.processEmails();
-            } else {
-                await app.processDropbox();
-            }
+            await app.process();
             await wait(5000);
         } while (true);
     }

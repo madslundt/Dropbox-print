@@ -27,31 +27,20 @@ class App {
         }));
     }
 
-    public async processDropbox() {
-        console.log('Processing Dropbox');
-
+    public async process() {
         const files = await this.getFiles();
         if (files.length > 0) {
             await this.downloadFiles(files);
             await this.deleteFiles(files);
-        }
+            this.sendEmails(files);
 
-        console.log('Processing Dropbox ended');
+            console.log(`${files.length} files processed`);
+        }
     }
 
-    public async processEmails() {
-        console.log('Processing Email');
-
-        fs.readdir(this.config.filePath, (err, filenames) => {
-            if (err) {
-                return;
-            }
-            if (filenames.length > 0) {
-                this.sendEmail(filenames);
-            }
-        });
-
-        console.log('Processing Email ended');
+    private sendEmails(files: (DropboxTypes.files.FileMetadataReference | DropboxTypes.files.FolderMetadataReference | DropboxTypes.files.DeletedMetadataReference)[]) {
+        const filenames = files.map(file => file.name);
+        this.sendEmail(filenames);
     }
 
     private async downloadFiles(files: (DropboxTypes.files.FileMetadataReference | DropboxTypes.files.FolderMetadataReference | DropboxTypes.files.DeletedMetadataReference)[]) {
@@ -101,12 +90,11 @@ class App {
                 }]
             });
 
-            setTimeout(() => { fs.unlink(filePath, (err) => {}) }, 2000);
+            setTimeout(() => { fs.unlink(filePath, (err) => {}) }, 10000);
         }
     }
 
     private async getFiles() {
-        console.log('Get files');
         const files = await this.dropbox.filesListFolder({ path: this.config.dropboxPath });
 
         if (files && files.entries) {
