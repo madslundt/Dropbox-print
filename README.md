@@ -12,7 +12,7 @@ For now just run the two commands:
 
 Run
 ===
-Make sure to have a config.json file ready.
+Make sure to create a config.json file and then run:
 `node dist/index.js -c <CONFIG PATH>`
 
 Create config
@@ -38,8 +38,8 @@ Create config
 
 **accessToken**: Access token from Dropbox
 
-**filePath**: Folder to store files downloaded from Dropbox locally. This is just temporary and gets deleted after the email has been sent.
+**filePath**: Folder to store files downloaded from Dropbox locally. This is just temporary and gets deleted short time after the email has been sent.
 
-**dropboxPath**: Dropbox folder to look and download files from.
+**dropboxPath**: Dropbox folder to watch and download files from.
 
-**mail**: Mail settings
+**mail**: Mail settings including SMTP server.
